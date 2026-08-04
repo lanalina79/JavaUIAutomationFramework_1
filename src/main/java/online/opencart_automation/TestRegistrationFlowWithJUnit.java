@@ -8,6 +8,7 @@ import online.opencart_automation.pageobjects.HomePage;
 import online.opencart_automation.pageobjects.SignUpLoginPage;
 import online.opencart_automation.pageobjects.SignUpPage;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -15,12 +16,13 @@ public class TestRegistrationFlowWithJUnit {
 
     static WebDriver driver;
     private static final String email = DataGeneratorManager.getRandomEmail();
+    private static final String emptyEmail= "";
     HomePage homePage;
     SignUpLoginPage signUpLoginPage;
 
     @BeforeAll
     public static void executeOnceBeforeAllTests(){
-        System.out.println("Th test suite has been started!");
+        System.out.println("The test suite has been started!");
     }
 
 
@@ -32,15 +34,15 @@ public class TestRegistrationFlowWithJUnit {
         homePage=new HomePage(driver);
         homePage.navigateToSignUpLoginPage();
 
-        signUpLoginPage=new SignUpLoginPage(driver);
-        signUpLoginPage.CompleteInitialDataSignUp(DataGeneratorManager.getRandomUsername(),email);
+        //signUpLoginPage=new SignUpLoginPage(driver);
+        //signUpLoginPage.CompleteInitialDataSignUp(DataGeneratorManager.getRandomUsername(),email);
 
 
     }
 
 
 @Test
-//@Disabled
+@Disabled
     @DisplayName("Successful Registration of user by using valid credentials")
     public void registerWithValidData() throws InterruptedException {
 
@@ -68,11 +70,30 @@ public class TestRegistrationFlowWithJUnit {
 
 
     @Test
-    @DisplayName("Unable to register a user by using invalid password")
+    @Disabled
+    @DisplayName("Unable to register a user with same email")
     public void registerWithInvalidData() throws InterruptedException {
 
         boolean isEmailErrorDisplayed =signUpLoginPage.getError();
         Assertions.assertTrue(isEmailErrorDisplayed,"The correct email is displayed");
+    }
+
+
+    @Test
+    @DisplayName("Validate Error Message")
+
+     public void RegisterWithEmptyEmailField() {
+        signUpLoginPage=new SignUpLoginPage(driver);
+        signUpLoginPage.CompleteInitialDataSignUp(DataGeneratorManager.getRandomUsername(),emptyEmail);
+
+
+        String expectedErrorMessage = "Please fill out this field";
+        String actualErrorMessage = driver.findElement(By.cssSelector("input[data-qa='signup-email']")).getAttribute("validationMessage");
+
+        System.out.println("Expected: " + expectedErrorMessage);
+        System.out.println("Actual: " + actualErrorMessage);
+
+        Assertions.assertEquals(actualErrorMessage,expectedErrorMessage,"The actual error message is "+expectedErrorMessage);
     }
 @AfterEach
 public void executeScriptAfterEachTest(){

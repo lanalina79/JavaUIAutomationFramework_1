@@ -29,6 +29,8 @@ public class SignUpLoginPage extends Page {
         System.out.println("The SignUp button was clicked");
     }
 
+
+
     public boolean getError(){
        return emailError.isDisplayed();
     }
