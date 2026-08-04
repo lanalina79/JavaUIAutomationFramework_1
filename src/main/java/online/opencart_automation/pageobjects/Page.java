@@ -29,10 +29,14 @@ public abstract class Page {
         System.out.println("The lock button was clicked");
     }
 
-    public void navigateToHomePage(){
-        home.click();
-        System.out.println("The Home button was clicked");
+    public boolean isLogoutButtonDisplayed(){
+
+           boolean displayed = logoutButton.isDisplayed();
+        if(displayed){
+        System.out.println("User was successfully logged in");}
+        return displayed;
     }
+
 
     public void logoutAction(){
         logoutButton.click();

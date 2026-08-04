@@ -40,6 +40,8 @@ public class TestRunner {
         signUpPage.chooseCountryFromDropdown("India");
         signUpPage.clickSignUpButton();
 
+
+
         Thread.sleep(5000);
 
         AccountCreatedPage accountCreatedPage =new AccountCreatedPage(driver);

@@ -18,6 +18,9 @@ public class SignUpLoginPage extends Page {
     @FindBy (css = "input[data-qa='signup-email']")
     private WebElement emailInput;
 
+    @FindBy (xpath = "//p[normalize-space()='Email Address already exist!']")
+    private WebElement emailError;
+
     public void CompleteInitialDataSignUp(String username, String email){
         usernameInput.sendKeys(username);
         emailInput.sendKeys(email);
@@ -25,6 +28,12 @@ public class SignUpLoginPage extends Page {
         System.out.println("The form was populated with username "+ username +" and email " +email);
         System.out.println("The SignUp button was clicked");
     }
+
+    public boolean getError(){
+       return emailError.isDisplayed();
+    }
+
+
 
     /*WebElement usernameInput = driver.findElement(By.xpath("//input[@placeholder='Name']"));
     String userNameRandom = DataGeneratorManager.getRandomUsername();

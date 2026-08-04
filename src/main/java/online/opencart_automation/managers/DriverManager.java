@@ -1,5 +1,6 @@
 package online.opencart_automation.managers;
 
+import com.google.common.base.Equivalence;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -42,6 +43,12 @@ public class DriverManager {
         return driver;
     }
 
+    public void tearDownForDriver(){
+        driver.quit();
+        driver=null;
+        instance=null;
+        System.out.println("The driver was reset to null as instance was");
+    }
 
 
 }
